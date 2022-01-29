@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,800;0,900;1,400&display=swap');
+ 
+ :root{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+*{
+    font-family: 'Montserrat', sans-serif;
+}
+ body{
+     background-color: rgb(3, 150, 248);  
+ }
+
+ .container{
+     width: 80%;
+     margin: auto;
+     margin-top: 30px;
+     text-align: center;
+ }
+ .app-name{
+     font-size: 25px;
+     color: rgb(197, 225, 243);
+     margin-bottom: 30px;
+ }
+
+ .input-box{
+     background-color: rgb(214, 230, 240);
+     border-radius: 15px;
+display: flex;
+flex-direction: row;
+flex-wrap: nowrap;
+padding: 6px;
+width: 70%;
+margin: auto;
+border: 0px;
+justify-content: center;
+ }
+ .task{
+ width: 70%;
+     background-color: rgb(214, 230, 240);
+     height: 28px;
+     padding: 4px;
+     border: 0px;
+ }
+ .task:focus{
+     border: none;
+     outline: none;
+ }
+ .task:active{
+     border: none;
+     outline: none;
+ }
+
+ .priority{
+     border: none;
+     background-color: rgb(214, 230, 240);
+     outline: none;
+     margin-right: 3px;
+ }
+ .priority:active{
+  border: none;
+ }
+.btn{
+    align-self: center;
+    display: flex;
+    flex-direction: row;
+    height: 35px;
+    padding: 6px;
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: rgb(37, 159, 240);  
+    border-radius: 6px;
+    color:rgb(227, 237, 243);
+    font-size: 20px;
+
+}
+.btn:hover{
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+.task-container{
+ 
+    width: 69%;
+    border-radius: 20px;
+    padding: 10px;
+    margin: auto;
+    margin-top: 40px;
+    background-color: rgb(214, 230, 240);
+    /* height: 45px; */
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+/* .first-line{
+    display: flex;
+    flex-direction: row;
+    border:1px solid red;
+    
+} */
+
+.total{
+    position: absolute;
+    top: 20px;
+    right: 50px;
+    font-size: large;
+    color:slategrey;
+}
+.task-title-area{
+  /* height: 40px;
+   */
+   font-size:25px;
+   padding: 5px;
+   color:rgb(5, 103, 160);
+   font-weight: 700;
+   margin: 0px;
+   border-bottom: 1px solid rgb(191, 209, 220);
+  /* background-color: rgb(202, 202, 202); */
+    /* border: red 1px solid; */
+
+}
+
+.listed-task{
+    display: flex;
+    flex-direction: column;
+    padding: 20px; 
+}
+.single-task-box{
+    display: flex;
+    flex-direction: column;
+  
+    border: 1px solid white;
+    margin-bottom: 10px;
+
+}
+.task-flex-box{
+    display: flex;
+    flex-direction: row;
+    /* flex-wrap: nowrap; */
+ 
+  justify-content: center;
+
+}
+.task-box{
+flex: 2;
+    /* display: flex;
+    flex-direction: column; */
+    padding: 8px;
+   /* justify-content: left;
+   align-items: center; */
+   min-height: 50px;
+   word-break: break-all;
+   font-size: 20px;
+   font-weight: 500;
+   color: rgb(9, 111, 165);
+   /* border: 1px solid red; */
+ 
+}
+
+
+
+.update-btn{
+    color: rgb(3, 150, 248);
+    margin: 5px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.cancle-btn{
+    color: rgb(175, 8, 8);
+    cursor: pointer;
+    text-shadow: rgba(145, 0, 0, 0.45) 45px 25px 50px -20px;
+    
+}
+
+
+
+.check-btn-box{
+     width: 15%;
+     display: flex;
+     flex-direction: row;
+     justify-content: right;
+     align-items:center;
+     padding-right: 15px;
+     font-size: 35px;
+     gap: 5px;
+}
+
+.added-info{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid white;
+    font-weight: 700;
+    color: rgb(8, 111, 179);
+    
+}
+
+.info-left{
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    gap: 6px;
+    width: 50%;
+    font-size: 12px;
+    margin-left: 15px;
+
+}
+.center-box{
+width: 50px;
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+justify-self: center;
+font-size: larger;
+}
+.right-box{
+    width: 120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+}
+.check-btn{
+    cursor: pointer;
+    color: rgb(9, 9, 75);
+}
+
+.high-p{
+    color: rgb(165, 11, 39);
+}
+
+.medium-p{
+    color:rgb(192, 101, 15) ;
+}
+
+@media screen and (max-width:800px) {
+    .task-box{
+        flex: 1;
+        font-size: 18px;
+        /* width: 600px; */
+        
+    }
+    .info-left{
+        font-size: 10px;
+    }
+    .task-flex-box{
+        gap: 40px;
+    }
+    
+}
+
+

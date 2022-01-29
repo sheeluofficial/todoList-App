@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="node_modules/normalize.css/normalize.css">
+    <link rel="stylesheet" href="todoList.css">
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+      crossorigin="anonymous"
+    />
+</head>
+<body>
+    <div class="container">
+        <h1 class="app-name">My To-Do App</h1>
+    <form action="" class="form">
+        <div class="input-box">
+        <input type="text" class="task" placeholder="Enter your task here" required>
+        <select name="" class="priority" required>
+            <option value="High">High</option>
+            <option value="Medium">Medium</option>
+            <option value="Low">low</option>
+        </select>
+        <input type="submit" value="Add" class="btn">
+        </div>
+       
+    </form>
+
+    <div class="task-container">
+            <div class="task-title-area">Your Tasks <div class="total">total</div> </div>
+            <div class="listed-tasks"></div>
+    </div>
+</div>
+</body>
+</html>
+<script> 
+let taskList = JSON.parse(localStorage.getItem("taskList")) ?? [];
+let task_input_flag = 0;
+    function task_creator(data,date,priority,status="Pending") {
+                     this.data = data;
+                     this.date = date;
+                     this.priority = priority;
+                     this.status = status;
+    }
+
+    document.querySelector("form").addEventListener("submit",(event)=>{
+ 
+   if(task_input_flag ==1) {
+    task_input_flag=0
+   } else {
+    let data = document.querySelector(".task").value;
+        let priority = document.querySelector(".priority").value;
+
+        let date = new Date();
+
+        let dateArr = [];
+        
+        dateArr[0] = +date.getFullYear()
+        dateArr[1] = +date.getMonth();
+        dateArr[2] = +date.getDate();
+        dateArr[3] = +date.getHours();
+        dateArr[4] = +date.getMinutes();
+
+        let task = new task_creator(data,dateArr,priority);
+        // console.log(task.date.getHours())
+        taskList.push(task);
+        localStorage.setItem("taskList",JSON.stringify(taskList));
+        
+        showTask(taskList);
+   }
+       
+
+    })
+    showTask(taskList)
+      
+    function showTask(taskList) {
+    let  all_task  = document.querySelector(".listed-tasks");
+    document.querySelector(".total").innerText = `Total task - ${taskList.length}`
+all_task.innerHTML=""
+        taskList.forEach(({data,date,priority,status},index) => {
+ 
+            let single_task_box = document.createElement("div");
+            single_task_box.setAttribute("class","single-task-box");
+
+            let task_flex_box = document.createElement("div");
+            task_flex_box.setAttribute("class","task-flex-box");
+
+            let task_box = document.createElement("div");
+            task_box.setAttribute("class","task-box");
+            task_box.innerText = data;
+              if(priority=="High") {
+                  task_box.classList.add("high-p")
+              }
+              if(priority=="Medium") {
+                  task_box.classList.add("medium-p")
+              }
+            let update = document.createElement("i");
+            update.setAttribute("class","fas");
+            update.setAttribute("title","Update");
+            update.classList.add("update-btn");
+            update.classList.add("fa-edit");
+            update.addEventListener("click",()=>{
+                task_input_flag =1;
+                updateInput(index)
+            })
+            task_box.append(update)
+            let done_btn_box = document.createElement("div");
+            done_btn_box.setAttribute("class","check-btn-box")
+            let check_btn = document.createElement("i");
+            check_btn.addEventListener("click",()=>{
+               changeStatus(index)
+            })
+            check_btn.setAttribute("class","fas");
+            check_btn.classList.add("fa-check-circle");
+            check_btn.setAttribute("title","Set as Done")
+            check_btn.classList.add("check-btn");
+            if(status=="Done") {
+               check_btn.style.color = "green"
+            }
+            
+            let cancle_btn = document.createElement("i");
+         
+            cancle_btn.addEventListener("click",()=>{
+                rmTask(index)
+            })
+            cancle_btn.setAttribute("class","fas");
+            cancle_btn.classList.add("fa-times-circle")
+            cancle_btn.setAttribute("title","Remove")
+            cancle_btn.classList.add("cancle-btn")
+            done_btn_box.append(check_btn,cancle_btn)
+
+        //   done_btn_box.innerHTML = `<i class="fas fa-check-circle" style="user-select: auto;"></i>`;
+        //   let i = document.createElement("i");
+        //     i.setAttribute()
+            task_flex_box.append(task_box,done_btn_box);
+
+            let addInfo_box_flex = document.createElement("div");
+            addInfo_box_flex.setAttribute("class","added-info");
+            
+            let added_info_left = document.createElement("div");
+            added_info_left.setAttribute("class","info-left")
+
+            let div_s = document.createElement("div")
+            div_s.innerText = `Status- ${status} `
+            let div_p = document.createElement("div");
+            div_p.innerText = `Priority- ${priority}`;
+            let div_t = document.createElement("div");
+            div_t.innerText = `Time-${date[3]}:${date[4]}`
+
+            added_info_left.append(div_s,div_p,div_t);
+
+
+            let right_box = document.createElement("div");
+            right_box.setAttribute("class","right-box")
+            right_box.innerText = `Date-${date[2]}/${date[1] +1}/${date[0]}`
+            addInfo_box_flex.append(added_info_left,right_box);
+
+            single_task_box.append(task_flex_box,addInfo_box_flex);
+            all_task.append(single_task_box)
+            
+        });
+        
+    }
+
+    function changeStatus(index) {
+        if(taskList[index].status=="Pending") {
+            taskList[index].status = "Done";
+        } else {
+            taskList[index].status = "Pending"
+        }
+
+        localStorage.setItem("taskList",JSON.stringify(taskList));
+        showTask(taskList);
+    }
+
+    function rmTask(index) {
+        taskList.splice(index,1);
+        localStorage.setItem("taskList",JSON.stringify(taskList));
+        showTask(taskList);
+    }
+
+    function updateInput(index) {
+        document.querySelector(".task").value = taskList[index].data;
+        let priority = taskList[index].priority;
+        document.querySelector(".priority").value=priority;
+        document.querySelector(".btn").value= "Update"
+        document.querySelector(".btn").addEventListener("click",()=>{
+            if(task_input_flag==1) {
+                taskList[index].data = document.querySelector(".task").value;
+               taskList[index].priority = document.querySelector(".priority").value;
+
+               
+               localStorage.setItem("taskList",JSON.stringify(taskList))
+            }
+            showTask(taskList)
+        })
+
+  
+    }
+
+</script>
